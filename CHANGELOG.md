@@ -2,15 +2,22 @@
 
 - [Changelog](#changelog)
   - [Next](#next)
-  - [Version 0.0.2](#version-002)
-  - [Version 0.0.1](#version-001)
+  - [v0.0.4](#v004)
+  - [v0.0.3](#v003)
+  - [v0.0.2](#v002)
+  - [v0.0.1](#v001)
 
 
 ## Next
 
+## v0.0.4
+- Proper release without --amend
 
-## Version 0.0.2
-- Updated readme.md
+## v0.0.3
+- *Readme*: Added proper example
 
-## Version 0.0.1
+## v0.0.2
+- Updated Readme.md
+
+## v0.0.1
 - Initial version

@@ -1,7 +1,7 @@
 {
   "name": "inflate-object-spread",
   "description": "Inflate objects that are written with keys as string paths: `{ 'foo.bar': 'baz' }` into `{ foo: { bar: 'baz' } }`",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "dist/inflate-object-spread.js",
   "jsnext:main": "src/index.js",
   "module": "src/index.js",
@@ -32,7 +32,7 @@
     "minify": "uglifyjs dist/inflate-object-spread.js -o dist/inflate-object-spread.js --mangle --compress warnings=false --pure-funcs=Object.defineProperty --source-map \"filename='dist/inflate-object-spread.js.map'\"",
     "prepublish": "npm run build",
     "format": "prettier --semi false --write 'src/**/*.js'",
-    "release": "npm run build && npm test && git commit --amend -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+    "release": "npm run build && npm test && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
   "babel": {
     "presets": [
