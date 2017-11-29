@@ -1,63 +1,39 @@
-Dot.notation reducer mixin
-==========================
+Inflate Object Spread
+=====================
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Alber70g/hyperapp-dot-notation-reducer.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/Alber70g/inflate-object-spread.svg)](https://greenkeeper.io/)
 
-This mixin allows Hyperapp-actions to return an object with a path as property: `{ '...deep.path': { deep: 'variable' } }`.
+The library exposes one function `inflate(obj: Object, newObj: Object) => Object`.
 
-The mixin is uses `update` event to modify the `newState`.
-Make sure you include this as the first mixin, as other mixins might want to use the 'normalized' state.
+Example:
 
-An example can be found here:  https://codepen.io/alber70g/pen/dzKvYB?editors=0010
+```
+
+```
+
+[![Travis CI](https://img.shields.io/travis/Alber70g/inflate-object-spread.svg)](https://travis-ci.org/Alber70g/inflate-object-spread)
+[![Codecov](https://img.shields.io/codecov/c/github/Alber70g/inflate-object-spread/master.svg)](https://codecov.io/gh/hyperapp/hyperapp)
+[![npm](https://img.shields.io/npm/v/inflate-object-spread.svg)](https://www.npmjs.org/package/inflate-object-spread)
 
 
-[![Travis CI](https://img.shields.io/travis/Alber70g/hyperapp-dot-notation-reducer.svg)](https://travis-ci.org/Alber70g/hyperapp-dot-notation-reducer)
-[![Codecov](https://img.shields.io/codecov/c/github/Alber70g/hyperapp-dot-notation-reducer/master.svg)](https://codecov.io/gh/hyperapp/hyperapp)
-[![npm](https://img.shields.io/npm/v/hyperapp-dot-notation-reducer.svg)](https://www.npmjs.org/package/hyperapp-dot-notation-reducer)
 
-
-
-Installation
-------------
+Installation & Usage
+--------------------
 
 You can import the mixin and use it in the app like so:
 
 ```javascript
-import { DotNotationReducer } from 'hyperapp-dot-notation-reducer';
+import inflate from 'inflate-object-spread';
 // umd
-// const { DotNotationReducer } = hyperappDotNotationReducer;
+// const inflate = inflateObjectSpread;
 // pre es6
-// var DotNotationReducer = hyperappDotNotationReducer.DotNotationReducer;
+// var inflate = inflateObjectSpread.inflate;
 
-app({
-  state: { something: { counter: 0 } },
-  view: (state, actions) =>
-    <main>
-      {state.something.counter}
-      <button onclick={actions.up}>up</button>
-    </main>,
-  actions: {
-    up: (state, actions) =>
-      ({ 'something.counter': state.something.counter + 1 })
-  }
-  mixins: [DotNotationReducer],
-  events: {}
-})
-```
+const oldState = { foo: { bar: 0 } };
+const increment = (state) => inflate(state, { 'foo.bar': state.foo.bar + 1 });
+const newState = increment(oldState); // { foo: { bar: 1 } }
+increment(newState); // { foo: { bar: 2 } }
 
-Usage
------
-
-### Setting a deep property
-
-```javascript
-actions: {
-  setName: (state, actions, value) =>
-    ({ 'login.name': value })
-}
-```
-```json
-{ "login": { "name": "value" } }
 ```
 
 ### Deep object with spread
@@ -65,10 +41,8 @@ Set an the properties of a deep path, while retaining the other properties.
 This means that you can send an object, and it's properties will be set instead of the new object replaces the existing one
 
 ```javascript
-actions: {
-  setName: (state, actions, { name, email }) =>
-    ({ '...login': { name, email })
-}
+setName: (state, { name, email }) =>
+  inflate(state, { '...login': { name, email })
 ```
 
 before
@@ -81,32 +55,12 @@ after
 { "login": { "prop": "value", "name": "name", "email": "email" } }
 ```
 
-### Replacing the state
-Since you cannot replace the full state in Hyperapp (it's always a merge of existing properties overwriting the new ones in the root of the state),
-you can now do so using the spread `...` operator without a property.
-
-```javascript
-actions: {
-  setState: (state, actions, newState) =>
-    ({ '...': { prop: 'value' } })
-}
-```
-
-before
-```json
-{ "login": { "prop": "value"  } }
-```
-
-after
-```json
-{ "prop": "value" }
-```
-
 Author notes
 ------------
 
-This is my first official contribution to anything public. Any comments are welcome.
-
 Further improvements:
 
-- array index manipulation through path `{ 'app.counters[0].value': 10 } `
+- array manipulation with index (possible api's)
+  - `{ 'app.counters.0.value': 10 }`
+  - `{ 'app.counters[0].value': 10 }`
+  - `{ 'app.counters.[0].value': 10 }`
