@@ -8,7 +8,10 @@ The library exposes one function `inflate(obj: Object, newObj: Object) => Object
 Example:
 
 ```
-
+const oldState = { foo: { bar: 0 } };
+const increment = (state) => inflate(state, { 'foo.bar': state.foo.bar + 1 });
+const newState = increment(oldState); // { foo: { bar: 1 } }
+increment(newState); // { foo: { bar: 2 } }
 ```
 
 [![Travis CI](https://img.shields.io/travis/Alber70g/inflate-object-spread.svg)](https://travis-ci.org/Alber70g/inflate-object-spread)
@@ -28,12 +31,6 @@ import inflate from 'inflate-object-spread';
 // const inflate = inflateObjectSpread;
 // pre es6
 // var inflate = inflateObjectSpread.inflate;
-
-const oldState = { foo: { bar: 0 } };
-const increment = (state) => inflate(state, { 'foo.bar': state.foo.bar + 1 });
-const newState = increment(oldState); // { foo: { bar: 1 } }
-increment(newState); // { foo: { bar: 2 } }
-
 ```
 
 ### Deep object with spread
